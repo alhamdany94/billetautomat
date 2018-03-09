@@ -1,6 +1,6 @@
 package automat;
 
-
+//hello
 
 public class BenytBilletautomat
 {
