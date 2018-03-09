@@ -22,13 +22,15 @@ public class BenytBilletautomat
 			System.out.println("Tast 1 for at indbetale penge");
 			System.out.println("Tast 2 for at udskrive din billet");
 			System.out.println("Tast 3 for at få returpengene");
-			System.out.println();
+			System.out.println("tast 4 for at afslutte");
 			System.out.println("Tast 10 for at logge ind som montør");
 			if (automat.erMontør()) {
-				System.out.println("Tast 11 for at se status (montør)");
+                                System.out.println("-----Montør tilstand-----");
+                                System.out.println("Tast 11 for at se status (montør)");
 				System.out.println("Tast 12 for at nulstille (montør)");
 				System.out.println("Tast 13 for at sætte billetpris (montør)");
 				System.out.println("Tast 14 for at logge ud af montørtilstand");
+                                System.out.println("tast 15 for at udbetale indkomst");
 			}
 			int valg = tastatur.nextInt();
 			tastatur.nextLine();
@@ -76,9 +78,7 @@ public class BenytBilletautomat
                                 
 			}
                         else if (valg==15) {
-                            if(montørtilstand){
 				automat.tømAutomat();
-                            }
 			}
 			else {
 				System.out.println("Ugyldigt valg, prøv igen");
