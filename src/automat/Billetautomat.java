@@ -1,147 +1,146 @@
 package automat;
+
 /**
  * Model af en simpel billetautomat til enkeltbilletter med én fast pris.
  */
 public class Billetautomat {
-	private int billetpris;    // Prisen for én billet.
-	private int balance; // Hvor mange penge kunden p.t. har puttet i automaten
-	private int antalBilletterSolgt; // Antal billetter automaten i alt har solgt
-	public static boolean montørtilstand;
-        private int indkomst;
-	/**
-	 * Opret en billetautomat der sælger billetter til 10 kr.
-	 */
-	public Billetautomat() {
-		billetpris = 10;
-		balance = 0;
-		antalBilletterSolgt = 0;
-	}
 
-	/**
-	 * Giver prisen for en billet. 
-	 */
-	public int getBilletpris() {
-		int resultat = billetpris;
-		return resultat;
-	}
+    private int billetpris;    // Prisen for én billet.
+    private int balance; // Hvor mange penge kunden p.t. har puttet i automaten
+    private int antalBilletterSolgt; // Antal billetter automaten i alt har solgt
+    public static boolean montørtilstand;
+    private int indkomst;
+    private String billettype;
 
-	/**
-	 * Modtag nogle penge (i kroner) fra en kunde.
-	 */
-	public void indsætPenge(int beløb) {
-		balance = balance + beløb;
-	}
+    /**
+     * Opret en billetautomat der sælger billetter til 10 kr.
+     */
+    public Billetautomat() {
+        billetpris = 10;
+        balance = 0;
+        antalBilletterSolgt = 0;
+    }
 
-	/**
-	 * Giver balancen (beløbet maskinen har modtaget til den næste billet).
-	 */
-	public int getBalance() {
-		return balance;
-	}
+    /**
+     * Giver prisen for en billet.
+     */
+    public int getBilletpris() {
+        int resultat = billetpris;
+        return resultat;
+    }
 
-	/**
-	 * Udskriv en billet.
-	 * Opdater total og nedskriv balancen med billetprisen
-	 */
-	public void udskrivBillet() {
-		if (balance<10) {
-			System.out.println("Du mangler at indbetale nogle penge");
-		}
-                else if (balance >=10){
-		System.out.println("##########B##T#########");
-		System.out.println("# BlueJ Trafikselskab #");
-		System.out.println("#                     #");
-		System.out.println("#        Billet       #");
-		System.out.println("#        " + billetpris + " kr.       #");
-		System.out.println("#                     #");
-		System.out.println("##########B##T#########");
-		System.out.println("# Du har " + (balance-billetpris) + " kr til gode       #");
-		System.out.println("##########B##T#########");
-		System.out.println();
+    /**
+     * Modtag nogle penge (i kroner) fra en kunde.
+     */
+    public void indsætPenge(int beløb) {
+        balance = balance + beløb;
+    }
 
-		antalBilletterSolgt = antalBilletterSolgt + 1;
-		balance = balance - billetpris; // Billetter koster 10 kroner
-                }
-	}
+    /**
+     * Giver balancen (beløbet maskinen har modtaget til den næste billet).
+     */
+    public int getBalance() {
+        return balance;
+    }
 
+    /**
+     * Udskriv en billet. Opdater total og nedskriv balancen med billetprisen
+     */
+    public void udskrivBillet() {
+        if (balance < 10) {
+            System.out.println("Du mangler at indbetale nogle penge");
+        } else if (balance >= 10) {
+            System.out.println("##########B##T#########");
+            System.out.println("# BlueJ Trafikselskab #");
+            System.out.println("#                     #");
+            System.out.println("#        Billet       #");
+            System.out.println("#        " + billetpris + " kr.       #");
+            System.out.println("#                     #");
+            System.out.println("##########B##T#########");
+            System.out.println("# Du har " + (balance - billetpris) + " kr til gode       #");
+            System.out.println("##########B##T#########");
+            System.out.println();
 
-	public int returpenge() {
-		int returbeløb = balance;
-		balance = 0;
-		System.out.println("Du får "+returbeløb+" kr retur");
-		return returbeløb;
-	}
+            antalBilletterSolgt = antalBilletterSolgt + 1;
+            balance = balance - billetpris; // Billetter koster 10 kroner
+        }
+    }
 
-	
-	void montørLogin(String adgangskode) {
-                
-                    if ("1234".equals(adgangskode)) {
-                            montørtilstand = true;
-                            System.out.println("Montørtilstand aktiveret");
-                            System.out.println("Du kan nu angive billetpris");
-                    } else {
-                            montørtilstand = false;
-                            System.out.println("Montørtilstand deaktiveret");
-                    }
-                    
-	}
+    public int returpenge() {
+        int returbeløb = balance;
+        balance = 0;
+        System.out.println("Du får " + returbeløb + " kr retur");
+        return returbeløb;
+    }
 
+    void montørLogin(String adgangskode) {
 
-	public int getTotal() {
-		if (montørtilstand) {
-			return billetpris * antalBilletterSolgt;
-		} else {
-			System.out.println("Afvist - log ind først");
-			return 0;
-		}
-	}
+        if ("1234".equals(adgangskode)) {
+            montørtilstand = true;
+            System.out.println("Montørtilstand aktiveret");
+            System.out.println("Du kan nu angive billetpris");
+        } else {
+            montørtilstand = false;
+            System.out.println("Montørtilstand deaktiveret");
+        }
 
-	public int getAntalBilletterSolgt() {
-		if (montørtilstand) {
-			return antalBilletterSolgt;
-		} else {
-			System.out.println("Afvist - log ind først");
-			return 0;
-		}
-	}
+    }
 
-	public void setBilletpris(int billetpris) {
-                if (montørtilstand){
-                    this.billetpris = billetpris;
-                }
-                else {
-                    System.out.println("Afvist - log ind først");
-                }
-	}
-
-	public void nulstil() {
-		if (montørtilstand) {
-                        antalBilletterSolgt = 0;
-                        System.out.println("Nulstilles.. vent venligst!"
-                                + " \nFuldført");
-                        
-		} else {
-			System.out.println("Afvist - log ind først");
-		}
-	}
-
-	public void setAntalBilletterSolgt(int antalBilletterSolgt) {
-		if (montørtilstand) {
-			this.antalBilletterSolgt = antalBilletterSolgt;
-		} else {
-			System.out.println("Afvist - log ind først");
-		}
-	}
-        void tømAutomat() {
+    public int getTotal() {
         if (montørtilstand) {
-            System.out.println("Automaten tømmes. "+indkomst+" kr. kommer ud");
-            indkomst =0;
+            return billetpris * antalBilletterSolgt;
+        } else {
+            System.out.println("Afvist - log ind først");
+            return 0;
+        }
+    }
+
+    public int getAntalBilletterSolgt() {
+        if (montørtilstand) {
+            return antalBilletterSolgt;
+        } else {
+            System.out.println("Afvist - log ind først");
+            return 0;
+        }
+    }
+
+    public void setBilletpris(int billetpris) {
+        if (montørtilstand) {
+            this.billetpris = billetpris;
         } else {
             System.out.println("Afvist - log ind først");
         }
     }
 
-	public boolean erMontør() {
-		return montørtilstand;
-	}
+    public void nulstil() {
+        if (montørtilstand) {
+            antalBilletterSolgt = 0;
+            System.out.println("Nulstilles.. vent venligst!"
+                    + " \nFuldført");
+
+        } else {
+            System.out.println("Afvist - log ind først");
+        }
+    }
+
+    public void setAntalBilletterSolgt(int antalBilletterSolgt) {
+        if (montørtilstand) {
+            this.antalBilletterSolgt = antalBilletterSolgt;
+        } else {
+            System.out.println("Afvist - log ind først");
+        }
+    }
+
+    public void tømAutomat() {
+        if (montørtilstand) {
+            System.out.println("Automaten tømmes. " + indkomst + " kr. kommer ud");
+            indkomst = 0;
+        } else {
+            System.out.println("Afvist - log ind først");
+        }
+    }
+
+    public boolean erMontør() {
+        return montørtilstand;
+    }
 }
