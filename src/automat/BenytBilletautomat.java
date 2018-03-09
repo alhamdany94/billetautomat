@@ -45,6 +45,10 @@ public class BenytBilletautomat
 				int beløb = automat.returpenge();
 				System.out.println("Du fik "+beløb+" kr retur");
 			}
+                        else if(valg==4){
+                            System.out.println("\n\nTak for at benytte vores billetautomat, programmet afsluttes.");
+                            break;
+                        }
 			else if (valg==10) {
                                 if (!Billetautomat.montørtilstand){
                                     System.out.print("Skriv kode: ");
