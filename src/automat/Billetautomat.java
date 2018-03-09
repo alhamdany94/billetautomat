@@ -7,7 +7,7 @@ public class Billetautomat {
 	private int balance; // Hvor mange penge kunden p.t. har puttet i automaten
 	private int antalBilletterSolgt; // Antal billetter automaten i alt har solgt
 	public static boolean montørtilstand;
-
+        private int indkomst;
 	/**
 	 * Opret en billetautomat der sælger billetter til 10 kr.
 	 */
@@ -132,6 +132,14 @@ public class Billetautomat {
 			System.out.println("Afvist - log ind først");
 		}
 	}
+        void tømAutomat() {
+        if (montørtilstand) {
+            System.out.println("Automaten tømmes. "+indkomst+" kr. kommer ud");
+            indkomst =0;
+        } else {
+            System.out.println("Afvist - log ind først");
+        }
+    }
 
 	public boolean erMontør() {
 		return montørtilstand;
