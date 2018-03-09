@@ -4,6 +4,8 @@ package automat;
 
 public class BenytBilletautomat
 {
+
+    private static boolean montørtilstand;
 	public static void main(String[] arg)
 	{
 		Billetautomat automat = new Billetautomat();
@@ -66,11 +68,18 @@ public class BenytBilletautomat
 				automat.setBilletpris(beløb);
 			}
 			else if (valg==14) {
-				automat.montørLogin("");;
+				automat.montørLogin("");
+                                
+			}
+                        else if (valg==15) {
+                            if(montørtilstand){
+				automat.tømAutomat();
+                            }
 			}
 			else {
 				System.out.println("Ugyldigt valg, prøv igen");
 			}
+                        
 		}
 	}
 }
