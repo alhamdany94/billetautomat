@@ -10,32 +10,38 @@ public class BenytBilletautomat {
     public static void main(String[] arg) {
         Billetautomat automat = new Billetautomat();
         Scanner tastatur = new Scanner(System.in);  // forbered
+        int billettypeValg = 0;
 
         while (true) {
 
             if (!billettypeValgt) {
-                int billettypeValg = 0;
-                System.out.println("Vælg billettype:");
-                System.out.println("1 Børnebillet  (12,00 kr)");
-                System.out.println("2 Voksenbillet (24,00 kr)");
-
-                int x = 1;
                 do {
 
+                        System.out.println("Vælg billettype:");
+                        System.out.println("1 Børnebillet  (12,00 kr)");
+                        System.out.println("2 Voksenbillet (24,00 kr)");
                     try {
                         billettypeValg = tastatur.nextInt();
-                        x=2;
+                        
+                        
                     } catch (Exception e) {
-                        System.out.println("hov, du indtastet ikke et tal");
+                        System.out.println("indtast venligst et tal");
+                        System.out.println("Prøv venligst");
                         tastatur.nextLine();
                     }
-                } while (x == 1);
-
-                if (billettypeValg == 1) {
+                    
+                    if (billettypeValg == 1) {
                     automat.setTilBetaling(automat.getBørneBilletPris());
+                    break;
+                    
 
                 } else if (billettypeValg == 2) {
                     automat.setTilBetaling(automat.getVoksenBilletPris());
+                    break;
+                }
+                } while (true);
+
+                
 
                     billettypeValgt = true;
 
@@ -106,4 +112,4 @@ public class BenytBilletautomat {
             }
         }
     }
-}
+
