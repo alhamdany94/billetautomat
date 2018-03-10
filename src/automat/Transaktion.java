@@ -5,16 +5,29 @@
  */
 package automat;
 
+import java.util.Date;
+
 /**
  *
  * @author hamza
  */
+
+
 public class Transaktion {
     
-    String tidspunkt;
-    String handling;
-    int beløb;
+    private String tidspunkt;
+    private String handling;
+    private int beløb;
+    private Date dato;
     
+    public Transaktion(String handling){
+        
+        this.dato = new Date();
+        this.tidspunkt = dato.toString();
+        this.handling = handling;
+        
+    
+    }
     
     
 }
