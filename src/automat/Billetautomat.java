@@ -16,7 +16,10 @@ public class Billetautomat {
     private int antalVoksenBilletterSolgt; // Antal billetter automaten i alt har solgt
     public static boolean montørtilstand;
     private int indkomst;
-    private ArrayList<Transaktion> Transaktioner;
+    private ArrayList<Transaktion> transaktioner;
+    private BilletautomatMenuer menu = new BilletautomatMenuer(this);
+    private ArrayList<Billet> billetter = new ArrayList<Billet>();
+
     /**
      * Opret en billetautomat der sælger billetter til 10 kr.
      */
@@ -24,39 +27,52 @@ public class Billetautomat {
         børneBilletPris = 12;
         voksenBilletPris = 24;
         balance = 0;
-        Transaktioner = new ArrayList<Transaktion>();
-      
+        transaktioner = new ArrayList<Transaktion>();
+
+    }
+
+    public ArrayList<Billet> getBilletter() {
+        return billetter;
+    }
+
+    public void setBilletter(ArrayList<Billet> billetter) {
+        this.billetter = billetter;
+    }
+
+    
+    
+    
+    public int getBørneBilletPris() {
+
+        return børneBilletPris;
+
+    }
+
+    public void setBørneBilletPris(int børneBilletPris) {
+        this.børneBilletPris = børneBilletPris;
+    }
+
+    public int getVoksenBilletPris() {
+        return voksenBilletPris;
     }
 
     /**
      * Giver prisen for en billet.
      */
-    public int getBørneBilletPris() {
-
-        return this.børneBilletPris;
-    }
-
-    public int getVoksenBilletPris() {
-
-        return this.voksenBilletPris;
-    }
-
-    public void setBørneBilletPris(int nyBørnBilletPris) {
-
-        this.børneBilletPris = nyBørnBilletPris;
-
-    }
-
-    public void setVoksenBilletPris(int nyVoksenBilletPris) {
-
-        this.voksenBilletPris = nyVoksenBilletPris;
-
+    public void setVoksenBilletPris(int voksenBilletPris) {
+        this.voksenBilletPris = voksenBilletPris;
     }
 
     public int getTilBetaling() {
-
+        
+        this.tilBetaling = 0;
+        for (int i = 0; i < billetter.size(); i++) {
+            
+            this.tilBetaling +=  billetter.get(i).getPris();
+            
+        }
+        
         return this.tilBetaling;
-
     }
 
     public void setTilBetaling(int nyTilBetaling) {
@@ -68,8 +84,8 @@ public class Billetautomat {
      * Modtag nogle penge (i kroner) fra en kunde.
      */
     public void indsætPenge(int beløb) {
-        
-        Transaktioner.add(new Transaktion("Penge indsat"));
+
+        transaktioner.add(new Transaktion("Penge indsat: " + beløb + " kr"));
         balance = balance + beløb;
     }
 
@@ -84,9 +100,9 @@ public class Billetautomat {
      * Udskriv en billet. Opdater total og nedskriv balancen med billetprisen
      */
     public void udskrivBillet() {
-        if (balance < 10) {
+        if (balance < tilBetaling) {
             System.out.println("Du mangler at indbetale nogle penge");
-        } else if (balance >= 10) {
+        } else if (balance >= tilBetaling) {
             System.out.println("##########B##T#########");
             System.out.println("# BlueJ Trafikselskab #");
             System.out.println("#                     #");
@@ -94,7 +110,7 @@ public class Billetautomat {
             System.out.println("#        " + tilBetaling + " kr.       #");
             System.out.println("#                     #");
             System.out.println("##########B##T#########");
-            System.out.println("# Du har " + (balance - tilBetaling) + " kr til gode       #");
+            System.out.println("#Du har " + (balance - tilBetaling) + " kr til gode#");
             System.out.println("##########B##T#########");
             System.out.println();
 
@@ -105,6 +121,8 @@ public class Billetautomat {
             }
 
             balance = balance - tilBetaling; // Billetter koster 10 kroner
+
+            transaktioner.add(new Transaktion("Billet udskrevet"));
         }
     }
 
@@ -112,7 +130,9 @@ public class Billetautomat {
         int returbeløb = balance;
         balance = 0;
         System.out.println("Du får " + returbeløb + " kr retur");
+        transaktioner.add(new Transaktion("Penge returneret: " + returbeløb + " kr"));
         return returbeløb;
+
     }
 
     public void montørLogin(String adgangskode) {
@@ -120,13 +140,13 @@ public class Billetautomat {
         if ("1234".equals(adgangskode)) {
             montørtilstand = true;
             System.out.println("Montørtilstand aktiveret");
-            System.out.println("Du kan nu angive billetpris");
         } else {
             montørtilstand = false;
             System.out.println("Montørtilstand deaktiveret");
         }
-        
-        
+
+        transaktioner.add(new Transaktion("Montøren logget ind"));
+
     }
 
     public int getIndkomst() {
@@ -154,6 +174,7 @@ public class Billetautomat {
         if (montørtilstand) {
             this.børneBilletPris = nyBørneBilletPris;
             this.voksenBilletPris = nyVoksenBilletPris;
+            System.out.println("Priserne er ændret til: "+ nyBørneBilletPris + "kr for børnebillet og " +nyVoksenBilletPris+"kr for voksen billet");
         } else {
             System.out.println("Afvist - log ind først");
         }
@@ -165,9 +186,11 @@ public class Billetautomat {
             antalBørneBilletterSolgt = 0;
             System.out.println("Nulstilles.. vent venligst!"
                     + " \nFuldført");
+            transaktioner.add(new Transaktion("System nulstillet"));
 
         } else {
             System.out.println("Afvist - log ind først");
+            transaktioner.add(new Transaktion("Log ind afvist"));
         }
     }
 
@@ -180,12 +203,18 @@ public class Billetautomat {
         }
     }
 
-    public void VisTransaktion() {
+    public void visLog() {
         if (montørtilstand) {
+            Date dato = new Date();
+            System.out.println("\n======= Transaktioner pr. " + dato.toString() + "=======");
+
+            for (int i = 0; i < transaktioner.size(); i++) {
+                System.out.println(transaktioner.get(i));
+
+            }
             
-            System.out.println(Transaktioner);
+            System.out.println("=============================================================\n");
         }
-        
 
     }
 
@@ -193,8 +222,10 @@ public class Billetautomat {
         if (montørtilstand) {
             System.out.println("Automaten tømmes. " + getIndkomst() + " kr. kommer ud");
             indkomst = 0;
+            transaktioner.add(new Transaktion("Automaten blev tømt"));
         } else {
             System.out.println("Afvist - log ind først");
+            transaktioner.add(new Transaktion("Log ind afvist"));
         }
     }
 
@@ -204,12 +235,22 @@ public class Billetautomat {
 
     public ArrayList<Transaktion> getTransaktion() {
 
-        return this.Transaktioner;
+        return this.transaktioner;
 
     }
-    public ArrayList<Transaktion> setTransaktion(ArrayList Transaktioner) {
 
-        this.Transaktioner =  Transaktioner;
-        return null;
+    public void setTransaktion(ArrayList Transaktioner) {
+
+        this.transaktioner = Transaktioner;
+
     }
+
+    public BilletautomatMenuer getMenu() {
+        return menu;
+    }
+
+    public void setMenu(BilletautomatMenuer menu) {
+        this.menu = menu;
+    }
+
 }

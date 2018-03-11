@@ -55,7 +55,7 @@ public class TjekBilletautomat
 		}
 
 		System.out.println("*** Tjek af andre billetpriser");
-		automat.setBilletpris(20);
+		automat.definerBilletPriser(20);
 		automat.indsætPenge(100);
 		automat.udskrivBillet();
 		retur = automat.returpenge();
